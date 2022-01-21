@@ -44,3 +44,4 @@ services:
         volumes:
           - nginx_secrets:/etc/letsencrypt
           - ./nginx:/etc/nginx/user_conf.d
+          - ./nginx:/etc/nginx/conf.d
