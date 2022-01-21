@@ -50,4 +50,4 @@ services:
         volumes:
             - ./data/certbot/conf:/etc/letsencrypt
             - ./data/certbot/www:/var/www/certbot
-        entrypoint: ["while : do certbot renew; sleep 12h & wait $${!}; done;"]
+        entrypoint: ["bash", "while : do certbot renew; sleep 12h & wait $${!}; done;"]
