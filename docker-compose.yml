@@ -4,7 +4,7 @@ volumes:
     joplin-data:
 
 services:
-    joplin-server:
+    app:
         image: florider89/joplin-server:latest
         depends_on:
             - db
