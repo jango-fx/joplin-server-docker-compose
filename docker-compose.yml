@@ -37,7 +37,7 @@ services:
             - joplin-data:/var/lib/postgresql/data
             - ./pg_backup:/
     nginx:
-        image: nginx/latest
+        image: nginx:latest
         depends_on:
             - app
         ports:
