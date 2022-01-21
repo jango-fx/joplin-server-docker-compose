@@ -11,8 +11,6 @@ services:
         ports:
             - "22300:22300"
         restart: unless-stopped
-        env_file:
-            - ./environment/joplin.env
         environment:
             - APP_BASE_URL=${APP_BASE_URL}
             - DB_CLIENT=pg
@@ -26,8 +24,6 @@ services:
         ports:
             - "5432:5432"
         restart: unless-stopped
-        env_file:
-            - ./environment/joplin.env
         environment:
             - APP_PORT=22300
             - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -54,4 +50,4 @@ services:
         volumes:
             - ./data/certbot/conf:/etc/letsencrypt
             - ./data/certbot/www:/var/www/certbot
-        entrypoint: /scripts/certbot_entrypoint.sh
+        entrypoint: ./scripts/certbot_entrypoint.sh
