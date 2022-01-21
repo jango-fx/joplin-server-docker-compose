@@ -44,5 +44,5 @@ services:
         volumes:
           - nginx_secrets:/etc/letsencrypt
           - ./nginx:/etc/nginx/user_conf.d
-          - ./nginx:/etc/nginx/conf.d
+#          - ./nginx:/etc/nginx/conf.d
         command: "/bin/bash -c 'envsubst < /etc/nginx/conf.d/joplin.template > /etc/nginx/conf.d/default.conf && nginx -g \"daemon off;\"'" 
