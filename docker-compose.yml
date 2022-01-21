@@ -2,9 +2,10 @@ version: '3'
 
 volumes:
     joplin-data:
+    nginx_secrets:
 
 services:
-    app:
+    joplin-server:
         image: florider89/joplin-server:latest
         depends_on:
             - db
@@ -33,21 +34,13 @@ services:
             - joplin-data:/var/lib/postgresql/data
 #            - ./pg_backup:/
     nginx:
-        image: nginx:latest
-        depends_on:
-            - app
-        ports:
-            - "80:80"
-            - "443:443"
+        image: jonasal/nginx-certbot:latest
         restart: unless-stopped
+        environment:
+          - ${CERTBOT_EMAIL}
+        ports:
+          - 80:80
+          - 443:443
         volumes:
-            - ./nginx:/etc/nginx/conf.d
-            - ./data/certbot/conf:/etc/letsencrypt
-            - ./data/certbot/www:/var/www/certbot
-        command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
-    certbot:
-        image: certbot/certbot
-        volumes:
-            - ./data/certbot/conf:/etc/letsencrypt
-            - ./data/certbot/www:/var/www/certbot
-        entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+          - nginx_secrets:/etc/letsencrypt
+          - ./nginx:/etc/nginx/user_conf.d
